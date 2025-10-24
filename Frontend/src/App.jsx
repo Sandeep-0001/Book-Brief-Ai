@@ -496,7 +496,7 @@ function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="text-center">
           <p className="text-slate-600">
-            © 2025 BookBrief AI. Powered by Google Gemini AI Technology.
+            © 2025 BookBrief AI. Powered by Advanced AI Technology.
           </p>
         </div>
         </div>
