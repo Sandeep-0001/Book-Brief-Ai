@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const multer = require('multer');
 require('dotenv').config();
+const path = require('path');
 
 const { extractTextFromFile } = require('./utils/fileProcessor');
 const { summarizeText } = require('./utils/summarizer');
@@ -95,6 +96,18 @@ app.use((error, req, res, next) => {
   
   res.status(500).json({ error: error.message });
 });
+
+// Serve React build in production
+if (process.env.NODE_ENV === 'production') {
+  const buildPath = path.join(__dirname, '..', 'Frontend', 'build');
+  app.use(express.static(buildPath));
+
+  // SPA fallback for non-API routes
+  app.get('*', (req, res, next) => {
+    if (req.path.startsWith('/api')) return next();
+    res.sendFile(path.join(buildPath, 'index.html'));
+  });
+}
 
 app.listen(PORT, () => {
   console.log(`BookBrief AI Server running on port ${PORT}`);
